@@ -1,4 +1,4 @@
-Csapatnév:
+Csapatnév: WhyAreWeStillAlive
 
 Csapattagok (név, Neptun-kód, e-mail cím):
 - Mészáros Marcell, MAL24N, m.marcell264@gmail.com
