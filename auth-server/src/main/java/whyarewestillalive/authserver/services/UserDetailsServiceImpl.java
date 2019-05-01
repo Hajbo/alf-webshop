@@ -2,6 +2,8 @@ package whyarewestillalive.authserver.services;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,20 +19,27 @@ import whyarewestillalive.authserver.repositories.UserRepository;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = repository.findById(username);
-        if (!user.isPresent())
+        log.debug("FindById " + username);
+        if (!user.isPresent()) {
+            log.warn("UsernameNotFound: " + username);
             throw new UsernameNotFoundException(username + " is an invalid username");
-        else
+        } else {
+            log.debug("Username was found: " + username);
             return new UserDetailsImpl(user.get());
+        }
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        log.debug("Return passwordEncoder");
         return new BCryptPasswordEncoder();
     }
 }

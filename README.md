@@ -20,7 +20,11 @@
 
 ### Get an access token
 Since there are two users added when the AuthorizationServer starts, you can use them:
-`curl -i -X POST -u client:secret http://0.0.0.0:8081/oauth/token\?grant_type\=password\&username\=admin\&password\=admin`
+`curl -i -X POST -u frontend:secret http://0.0.0.0:8081/oauth/token\?grant_type\=password\&username\=admin\&password\=admin`
 
 ### Access an endpoint
 `curl -i -H "Authorization: Bearer your_access_token" http://localhost:8080/message`
+
+### Register a new user
+`curl -i -X POST -d '{"name":"test","password":"test"}' -H "Content-Type: application/json"  http://0.0.0.0:8081/register`
+`curl -i -X POST -u frontend:secret http://0.0.0.0:8081/oauth/token\?grant_type\=password\&username\=test\&password\=test`

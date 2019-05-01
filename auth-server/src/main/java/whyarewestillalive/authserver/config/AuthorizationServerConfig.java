@@ -56,12 +56,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("client")
-                .authorizedGrantTypes("password", "refresh_token")
-                .secret(passwordEncoder.encode("secret"))
-                .scopes("sample")
-                .accessTokenValiditySeconds(600)
-                .refreshTokenValiditySeconds(3600);
+                .withClient("frontend")
+                    .secret(passwordEncoder.encode("secret"))
+                    .authorizedGrantTypes("password", "refresh_token")
+                    .scopes("read","write")
+                    .accessTokenValiditySeconds(600)
+                    .refreshTokenValiditySeconds(3600);
     }
 
     @Override

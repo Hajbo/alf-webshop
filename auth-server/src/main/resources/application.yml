@@ -10,5 +10,4 @@ spring:
   application:
     name: AuthServer
 logging:
-  level:
-    ROOT: DEBUG
+  path: /tmp/auth-logs
