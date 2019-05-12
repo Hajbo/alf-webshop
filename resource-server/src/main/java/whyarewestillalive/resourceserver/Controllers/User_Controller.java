@@ -1,4 +1,4 @@
-package whyarewestillalive.resourceserver.controllers;
+package whyarewestillalive.resourceserver.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import whyarewestillalive.resourceserver.User;
-import whyarewestillalive.resourceserver.UserRepository;
+import whyarewestillalive.resourceserver.Entities.*;
+import whyarewestillalive.resourceserver.Repositories.*;
 
 @RestController
-@RequestMapping("/users/")
+@RequestMapping("/users")
 public class User_Controller {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class User_Controller {
 	public ResponseEntity<User> getByid(@PathVariable long id){
 		User user=userRepository.findById(id);
 		if(user==null) {
-			return ResponseEntity.nofFound().build();
+			return ResponseEntity.notFound().build();
 		}
 		else {
 			return ResponseEntity.ok(user);
@@ -40,31 +40,19 @@ public class User_Controller {
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody User user) {
-		User temp=userRepository.findById(user.getID());
+		User temp=userRepository.findById(user.getId());
 		if(temp==null) {
 			temp=userRepository.save(user);
-			return ResponseEntity.ok().buid();
+			return ResponseEntity.ok().build();
 		}
 		else {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	@PutMapping("{id}/balance/{value}")
-	public ResponseEntity<?> changebalance(@PathVariable long id,@PathVariable long value){
-		User user=userRepository.findById(id);
-		if(user==null) {
-			return ResponseEntity.notFound().build();
-		}
-		else {
-			user.ChangeBalance(value);
-			user=userRepository.save(user);
-			return ResponseEntity.ok().build();
-		}
-	}
 	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody User user){
-		User temp=userRepository.findById(user.getID());
+		User temp=userRepository.findById(user.getId());
 		if(temp==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -87,15 +75,4 @@ public class User_Controller {
 		}
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> delete(@PathVariable long id){
-		User user=userRepository.findById(id);
-		if(user==null) {
-			return ResponseEntity.notFound().build();
-		}
-		else {
-			userRepository.deleteById(id);
-			return ResponseEntity.ok().build();
-		}
-	}
 }
