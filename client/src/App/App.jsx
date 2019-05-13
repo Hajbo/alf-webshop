@@ -31,14 +31,15 @@ class App extends React.Component {
         return (
             <Router history={history}>
                 <div>
-                    {currentUser &&
-                        <nav className="navbar navbar-expand navbar-dark bg-dark">
-                            <div className="navbar-nav">
-                                <Link to="/" className="nav-item nav-link">Home</Link>
-                                <a onClick={this.logout} className="nav-item nav-link">Logout</a>
-                            </div>
-                        </nav>
-                    }
+                    <nav className="navbar navbar-expand navbar-dark bg-dark">
+                        <div className="navbar-nav">
+                            <Link to="/" className="nav-item nav-link">Home</Link>
+                            { !currentUser && <Link to="/login" className="nav-item nav-link">Login</Link> }
+                            { !currentUser && <Link to="/register" className="nav-item nav-link">Register</Link> }
+                            { currentUser && <a onClick={this.logout} className="nav-item nav-link">Logout</a> }
+                        </div>
+                    </nav>
+                    
                     <div className="jumbotron">
                         <div className="container">
                             <div className="row">
