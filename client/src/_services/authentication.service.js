@@ -42,16 +42,15 @@ function login(username, password) {
 };
 
 function register(username, password) {
-    var data = {
-        'username': username,
-        'password': password
-    };
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            'name': username,
+            'password': password
+        })
     };
     return fetch(authApiRegisterUrl, requestOptions)
         .then(handleResponse)
