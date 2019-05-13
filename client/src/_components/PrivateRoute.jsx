@@ -6,13 +6,15 @@ import { authenticationService } from '../_services';
 export const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => {
         const currentUser = authenticationService.currentUserValue;
-        if ( currentUser && authenticationService.checkIfTokenExpired() ) {
-            try {
-                authenticationService.refreshToken();
-            } catch(err) {
-                console.log(err);
-                // Error while refreshing the token, need to log in again
-                return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+        if (currentUser !== 'undefined' && currentUser !== null) {
+            if ( authenticationService.checkIfTokenExpired(currentUser) ) {
+                try {
+                    authenticationService.refreshToken();
+                } catch(err) {
+                    console.log(err);
+                    // Error while refreshing the token, need to log in again
+                    return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                }
             }
         } else if (!currentUser) {
             // not logged in so redirect to login page with the return url

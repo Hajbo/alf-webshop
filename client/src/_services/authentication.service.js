@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
-import { authApiTokenUrl, authApiRefreshUrl } from '../config/urlconfig';
+import { authApiTokenUrl, authApiRefreshUrl, authApiRegisterUrl } from '../config/urlconfig';
 import { apiUsername, apiPassword } from '../config/authcredentials';
 import { handleResponse } from '../_helpers';
 
@@ -10,19 +10,20 @@ const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('
 export const authenticationService = {
     login,
     logout,
+    register,
     checkIfTokenExpired,
     refreshToken,
     currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
+    get currentUserValue() { return currentUserSubject.value }
 };
 
 function login(username, password) {
     var encodedAuth = new Buffer(`${apiUsername}:${apiPassword}`).toString('base64');
     const requestOptions = {
         method: 'POST',
-        headers: { 
+        headers: {
             'Authorization': `Basic ${encodedAuth}`
-         }
+        }
     };
 
     return fetch(`${authApiTokenUrl}&username=${username}&password=${password}`, requestOptions)
@@ -40,25 +41,42 @@ function login(username, password) {
         });
 };
 
-function checkIfTokenExpired() {
-    var user = localStorage.getItem('currentUser');
-    if(user !== 'undefined') {
-        var token = user.tokendata;
-        var decodedToken = jwt.decode(token, {complete: true});
-        var dateNow = new Date();
-        return (decodedToken.exp < dateNow.getTime());
-    } else {
-        return false;
-    }
+function register(username, password) {
+    var data = {
+        'username': username,
+        'password': password
+    };
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    };
+    return fetch(authApiRegisterUrl, requestOptions)
+        .then(handleResponse)
+        .then(response => {
+            console.log(`Registration for ${username} resulted in: ${response}`);
+            return response;
+        });
+}
+
+function checkIfTokenExpired(user) {
+    var token = user.tokendata;
+    var decodedToken = jwt.decode(token, { complete: true });
+    if (!decodedToken || decodedToken === 'undefined') return false;
+    var dateNow = new Date();
+    return (decodedToken.exp < dateNow.getTime());
+
 };
 
 function refreshToken() {
     var encodedAuth = new Buffer(`${apiUsername}:${apiPassword}`).toString('base64');
     const requestOptions = {
         method: 'POST',
-        headers: { 
+        headers: {
             'Authorization': `Basic ${encodedAuth}`
-         }
+        }
     };
     var refreshToken = localStorage.getItem('currentUser').tokendata.refresh_token;
 
