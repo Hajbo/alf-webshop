@@ -63,34 +63,51 @@ public class Item_Controller {
 	public ResponseEntity<?> update(@AuthenticationPrincipal Jwt jwt,@RequestBody Item item){
 		//Lets find the item
 		Item temp=itemRepository.findById(item.getId());
-		if(temp==null) {
-			//It did not exists
-			return (ResponseEntity<?>) ResponseEntity.notFound();
-		}
-		else {
-			//Update item
-			if(itemRepository.update(jwt.getSubject(),item)) {
-				return ResponseEntity.ok().build();
+		long id = temp.getUserId();
+		User user=itemRepository.findOwner(jwt.getClaims().get("client_id").toString());
+		String authorities=jwt.getClaims().get("authorities").toString();
+		long jwtID=user.getId();
+
+		if ((jwtID!=id) || (authorities.equals("ROLE_ADMIN"))) {
+
+			if (temp == null) {
+				//It did not exists
+				return (ResponseEntity<?>) ResponseEntity.notFound();
+			} else {
+				//Update item
+				if (itemRepository.update(jwt.getSubject(), item)) {
+					return ResponseEntity.ok().build();
+				} else {
+					return (ResponseEntity<?>) ResponseEntity.badRequest();
+				}
 			}
-			else {
-				return (ResponseEntity<?>) ResponseEntity.badRequest();
-			}
 		}
+		return (ResponseEntity<?>) ResponseEntity.badRequest();
 	}
 	
 	//Deletes item
 	@DeleteMapping
 	public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt,@RequestBody long id){
-		//deletes item if user and item is valid
-		boolean success=itemRepository.deleteItem(jwt.getSubject(),id);
-		if(success) {
-			//User and item is valid,user is the item owner
-			return ResponseEntity.ok().build();
+		Item temp=itemRepository.findById(id);
+		long userId = temp.getUserId();
+		User user=itemRepository.findOwner(jwt.getClaims().get("client_id").toString());
+		String authorities=jwt.getClaims().get("authorities").toString();
+		long jwtID=user.getId();
+
+		if ((jwtID!=userId) || (authorities.equals("ROLE_ADMIN"))) {
+
+			//deletes item if user and item is valid
+			boolean success = itemRepository.deleteItem(jwt.getSubject(), id);
+			if (success) {
+				//User and item is valid,user is the item owner
+				return ResponseEntity.ok().build();
+			} else {
+				//User or item not found,or invalid access
+				return (ResponseEntity<?>) ResponseEntity.notFound();
+			}
 		}
-		else {
-			//User or item not found,or invalid access
-			return (ResponseEntity<?>) ResponseEntity.notFound();
-		}
+
+		return (ResponseEntity<?>) ResponseEntity.badRequest();
 	}
 
 }
