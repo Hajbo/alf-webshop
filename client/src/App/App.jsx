@@ -46,7 +46,7 @@ class App extends React.Component {
                     <div className="jumbotron">
                         <div className="container">
                             <div className="row">
-                                <div className="col-md-6 offset-md-3">
+                                <div className="col-md-6 offset-md-4">
                                     <Route exact path="/" component={HomePage} />
                                     <PrivateRoute exact path="/profile" component={ProfilePage} />
                                     <Route path="/login" component={LoginPage} />

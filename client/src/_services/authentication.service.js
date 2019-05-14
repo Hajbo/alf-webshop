@@ -35,7 +35,7 @@ function login(username, password) {
                 'tokendata': user
             }
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            currentUserSubject.next(user);
+            currentUserSubject.next(currentUser);
 
             return user;
         });
