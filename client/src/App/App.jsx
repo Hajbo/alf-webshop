@@ -7,6 +7,7 @@ import { PrivateRoute } from '../_components';
 import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
+import { ProfilePage } from '../ProfilePage';
 
 class App extends React.Component {
     constructor(props) {
@@ -36,6 +37,8 @@ class App extends React.Component {
                             <Link to="/" className="nav-item nav-link">Home</Link>
                             { !currentUser && <Link to="/login" className="nav-item nav-link">Login</Link> }
                             { !currentUser && <Link to="/register" className="nav-item nav-link">Register</Link> }
+
+                            { currentUser && <Link to="/profile" className="nav-item nav-link">Profile</Link> }
                             { currentUser && <a onClick={this.logout} className="nav-item nav-link">Logout</a> }
                         </div>
                     </nav>
@@ -44,7 +47,8 @@ class App extends React.Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-6 offset-md-3">
-                                    <PrivateRoute exact path="/" component={HomePage} />
+                                    <Route exact path="/" component={HomePage} />
+                                    <PrivateRoute exact path="/profile" component={ProfilePage} />
                                     <Route path="/login" component={LoginPage} />
                                     <Route path="/register" component={RegisterPage} />
                                 </div>
