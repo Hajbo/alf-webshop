@@ -1,31 +1,34 @@
-import React from 'react';
+import React from "react";
+import ReactTable from "react-table";
 
-import { authenticationService } from '../_services';
+import { authenticationService } from "../_services";
+import { addToCart } from "../_helpers";
+import "react-table/react-table.css";
 
-class ProfilePage extends React.Component {
+class ShopPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             currentUser: authenticationService.currentUserValue,
+            data: null
         };
     }
 
     componentDidMount() {
         let newState = Object.assign({}, this.state);
-        newState.email = 'TestEmail';
-        newState.items = [
+        newState.data = [
             {
-                'id_': 1,
-                'name': 'alma',
-                'price': 100,
-                'description': 'This is an apple'
+                id_: 1,
+                name: 'alma',
+                price: 100,
+                description: 'This is an appleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssad'
             },
             {
-                'id_': 2,
-                'name': 'banana',
-                'price': 200,
-                'description': 'This is a banana'
+                id_: 2,
+                name: 'banana',
+                price: 200,
+                description: 'This is a banana'
             },
         ];
         this.setState(newState);
@@ -33,23 +36,68 @@ class ProfilePage extends React.Component {
     }
 
     render() {
-        const { currentUser, items, email } = this.state;
+        const { data, currentUser} = this.state;
+        console.log(data);
         return (
             <div>
-                <h1>Hi {currentUser.username}!</h1>
-                <p>Your email address: {email}</p>
-                <br></br>
-                <h3>Items for sale:</h3>
-                {items &&
-                    <ul>
-                        {items.map(item =>
-                            <li key={item.id_}>{item.name} costs {item.price}. {item.description}</li>
-                        )}
-                    </ul>
-                }
+                { data && (
+                 <ReactTable
+                    data={data}
+                    
+                    filterable
+                    defaultFilterMethod={(filter, row) =>
+                        String(row[filter.id]).includes(filter.value)}
+                    getTdProps={(state, rowInfo, column, instance) => {
+                        return {
+                        onClick: (e, handleOriginal) => {
+                            if (handleOriginal) {
+                                handleOriginal(rowInfo.index, currentUser);
+                            }
+                        }
+                        };
+                    }}
+                    columns={[
+                        {
+                            Header: "Shop items",
+                            columns: [
+                                {
+                                    Header: "#",
+                                    accessor: "id_",
+                                    width: 50,
+                                    filterable: false,
+                                },
+                                {
+                                    Header: "Name",
+                                    accessor: "name",
+                                    maxWidth: 100
+                                },
+                                {
+                                    Header: "Short description",
+                                    accessor: "description",
+                                    width: 300,
+                                    maxWidth: 500
+                                },
+                                {
+                                    Header: "Price",
+                                    accessor: "price",
+                                    width: 100
+                                },
+                                {
+                                    Header: "",
+                                    accessor: "add",
+                                    filterable: false,
+                                    Cell: ({ row })  => (<button onClick={() => addToCart(row, currentUser)}>Add to cart</button>)
+                                },
+                            ]
+                        }
+                    ]}
+                    defaultPageSize={10}
+                    className="-striped -highlight"
+                />
+                )}
             </div>
         );
     }
 }
 
-export { ProfilePage };
+export { ShopPage };

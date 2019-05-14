@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { authenticationService } from '../_services';
+import { authenticationService } from "../_services";
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -21,7 +21,6 @@ class HomePage extends React.Component {
             <div>
                 <h1>Hello there!</h1>
                 <h3>Feel free register and take a look at the shop!</h3>
-
             </div>
         );
     }

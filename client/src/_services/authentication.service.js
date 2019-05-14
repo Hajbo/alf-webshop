@@ -30,14 +30,11 @@ function login(username, password) {
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
+            var role = 'unauthenticated';
             var authorities = jwt.decode(user.access_token, { complete: true }).payload.authorities;
-            console.log(authorities);
-            if (authorities && typeof authorities !== 'undefined') {
-                var role = authorities[0];
-            } else {
-                var role = 'unauthenticated';
-            }
-            
+            if (authorities && typeof authorities !== 'undefined')
+                role = authorities[0];
+
             var currentUser = {
                 'username': username,
                 'tokendata': user,
