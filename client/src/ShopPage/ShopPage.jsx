@@ -48,18 +48,6 @@ class ShopPage extends React.Component {
                         defaultFilterMethod={(filter, row) =>
                             String(row[filter.id]).includes(filter.value)
                         }
-                        getTdProps={(state, rowInfo, column, instance) => {
-                            return {
-                                onClick: (e, handleOriginal) => {
-                                    if (handleOriginal) {
-                                        handleOriginal(
-                                            rowInfo.index,
-                                            currentUser
-                                        );
-                                    }
-                                }
-                            };
-                        }}
                         columns={[
                             {
                                 Header: "Shop items",
@@ -93,7 +81,7 @@ class ShopPage extends React.Component {
                                         Cell: ({ row }) => (
                                             <button
                                                 onClick={() =>
-                                                    addToCart(row, currentUser)
+                                                    addToCart(row.id_, currentUser)
                                                 }
                                             >
                                                 Add to cart

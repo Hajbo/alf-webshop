@@ -49,18 +49,6 @@ class CartPage extends React.Component {
                         defaultFilterMethod={(filter, row) =>
                             String(row[filter.id]).includes(filter.value)
                         }
-                        getTdProps={(state, rowInfo, column, instance) => {
-                            return {
-                                onClick: (e, handleOriginal) => {
-                                    if (handleOriginal) {
-                                        handleOriginal(
-                                            rowInfo.index,
-                                            currentUser
-                                        );
-                                    }
-                                }
-                            };
-                        }}
                         columns={[
                             {
                                 Header: "Shop items",
@@ -94,7 +82,7 @@ class CartPage extends React.Component {
                                         Cell: ({ row }) => (
                                             <button
                                                 onClick={() =>
-                                                    removeItemFromCart(row, currentUser)
+                                                    removeItemFromCart(row.id_, currentUser)
                                                 }
                                             >
                                                 Remove from cart
