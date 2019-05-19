@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import whyarewestillalive.resourceserver.Entities.*;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long>{
+public interface UserRepository extends JpaRepository<User,long>{
 
 	public User findById(long id);
 	public User findByName(String name);

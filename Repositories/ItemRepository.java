@@ -1,5 +1,5 @@
 package whyarewestillalive.resourceserver.Repositories;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,10 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import whyarewestillalive.resourceserver.Entities.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long>{
-
+public interface ItemRepository extends JpaRepository<Item,long>{
+	public List<Item> findAll();
 	public User findById(long id);
-	public User findByName(String name);
 }
