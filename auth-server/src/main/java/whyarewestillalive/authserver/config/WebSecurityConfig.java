@@ -96,6 +96,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
+    @Configuration
+    @Order(3)
+    public static class DeleteWebSecurityConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                        .mvcMatchers(HttpMethod.POST,"/delete").hasAuthority("ROLE_ADMIN");
+
+        }
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.ignoring().antMatchers("/delete");
+        }
+    }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
