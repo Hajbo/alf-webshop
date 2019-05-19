@@ -7,12 +7,13 @@ import java.util.List;
 public class Cart {
 	
 	@Id
+	@Column
 	protected Long userid;
-	
+
 	@OneToOne
 	protected User user;
 	
-	
+	@OneToMany(mappedBy = "id")
 	protected List<Item> items;
 	
 	public Long getUserId() {

@@ -1,6 +1,6 @@
 package Tests;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +14,7 @@ public class CartControllerTest {
 	CartController mock;
 
 	@Before
-	public void init(){
-		
-		
-		
-		
+	public void init() {
 		
 	}
 	
