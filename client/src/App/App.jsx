@@ -9,6 +9,7 @@ import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
 import { ProfilePage } from "../ProfilePage";
 import { ShopPage } from "../ShopPage";
+import { CartPage } from "../CartPage";
 
 import "./app.css";
 
@@ -72,6 +73,14 @@ class App extends React.Component {
                                 </Link>
                             )}
                             {currentUser && (
+                                <Link
+                                    to="/cart"
+                                    className="nav-item nav-link"
+                                >
+                                    Cart
+                                </Link>
+                            )}
+                            {currentUser && (
                                 <a
                                     onClick={this.logout}
                                     className="nav-item nav-link"
@@ -100,6 +109,11 @@ class App extends React.Component {
                                         exact
                                         path="/shop"
                                         component={ShopPage}
+                                    />
+                                    <PrivateRoute
+                                        exact
+                                        path="/cart"
+                                        component={CartPage}
                                     />
                                     <Route
                                         path="/login"

@@ -8,14 +8,12 @@ class ProfilePage extends React.Component {
 
         this.state = {
             currentUser: authenticationService.currentUserValue,
-            email: "Something went wrong while fetching your email address :(",
             items: null
         };
     }
 
     componentDidMount() {
         let newState = Object.assign({}, this.state);
-        newState.email = "TestEmail";
         newState.items = [
             {
                 id_: 1,
@@ -35,11 +33,10 @@ class ProfilePage extends React.Component {
     }
 
     render() {
-        const { currentUser, items, email } = this.state;
+        const { currentUser, items } = this.state;
         return (
             <div>
                 <h1>Hi {currentUser.username}!</h1>
-                <p>Your email address: {email}</p>
                 <br />
                 <h3>Items for sale:</h3>
                 {items && (

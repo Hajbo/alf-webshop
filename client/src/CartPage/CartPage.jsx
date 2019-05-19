@@ -2,10 +2,11 @@ import React from "react";
 import ReactTable from "react-table";
 
 import { authenticationService } from "../_services";
-import { addToCart } from "../_helpers";
+import { checkout, removeItemFromCart } from "../_helpers";
+
 import "react-table/react-table.css";
 
-class ShopPage extends React.Component {
+class CartPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -23,7 +24,7 @@ class ShopPage extends React.Component {
                 name: "alma",
                 price: 100,
                 description:
-                    "This is an appleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssad"
+                    "This is an apple"
             },
             {
                 id_: 2,
@@ -76,15 +77,15 @@ class ShopPage extends React.Component {
                                     },
                                     {
                                         Header: "",
-                                        accessor: "add",
+                                        accessor: "remove",
                                         filterable: false,
                                         Cell: ({ row }) => (
                                             <button
                                                 onClick={() =>
-                                                    addToCart(row.id_, currentUser)
+                                                    removeItemFromCart(row.id_, currentUser)
                                                 }
                                             >
-                                                Add to cart
+                                                Remove from cart
                                             </button>
                                         )
                                     }
@@ -95,9 +96,16 @@ class ShopPage extends React.Component {
                         className="-striped -highlight"
                     />
                 )}
+                <button
+                onClick={() =>
+                    checkout(currentUser)
+                }
+                >
+                    Checkout
+                </button>
             </div>
         );
     }
 }
 
-export { ShopPage };
+export { CartPage };
