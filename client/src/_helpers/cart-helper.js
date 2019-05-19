@@ -8,7 +8,7 @@ function addToCart(itemId, user) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.access_token}`
+            'Authorization': `Bearer ${user.tokendata.access_token}`
         },
         body: JSON.stringify({
             'id': itemId
@@ -28,7 +28,7 @@ function removeItemFromCart(itemId, user) {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.access_token}`
+            'Authorization': `Bearer ${user.tokendata.access_token}`
         },
         body: JSON.stringify({
             'id': itemId
@@ -47,7 +47,7 @@ function checkout(user) {
     const requestOptions = {
         method: 'PUT',
         headers: {
-            'Authorization': `Bearer ${user.access_token}`
+            'Authorization': `Bearer ${user.tokendata.access_token}`
         },
         body: JSON.stringify({
         })
@@ -65,7 +65,7 @@ function getCart(user) {
     const requestOptions = {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${user.access_token}`
+            'Authorization': `Bearer ${user.tokendata.access_token}`
         }
     };
     return fetch(resourceApiCart, requestOptions)
