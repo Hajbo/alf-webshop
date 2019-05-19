@@ -39,7 +39,7 @@ class RegisterPage extends React.Component {
                         { setStatus, setSubmitting }
                     ) => {
                         setStatus();
-                        authenticationService.register(username, password)
+                        authenticationService.register(username, password, email)
                         .then(
                             response => {
                                 if (response.status === 'SUCCESS') {

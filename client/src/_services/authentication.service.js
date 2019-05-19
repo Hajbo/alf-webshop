@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { authApiTokenUrl, authApiRefreshUrl, authApiRegisterUrl } from '../config/urlconfig';
 import { apiUsername, apiPassword } from '../config/authcredentials';
-import { handleResponse } from '../_helpers';
+import { handleResponse, resourceApiRegister } from '../_helpers';
 
 var jwt = require('jsonwebtoken');
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
@@ -47,7 +47,8 @@ function login(username, password) {
         });
 };
 
-function register(username, password) {
+function register(username, password, email) {
+    var response;
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -61,9 +62,19 @@ function register(username, password) {
     return fetch(authApiRegisterUrl, requestOptions)
         .then(handleResponse)
         .then(response => {
-            console.log(`Registration for ${username} resulted in: ${response}`);
+            console.log(`Auth API registration for ${username} resulted in: ${response.status}`);
+            login(username, password);
             return response;
-        });
+        })
+        .then(login(username, password)
+        .then(user => {
+            resourceApiRegister(username, email, user.access_token);
+        })
+        .then(resourceResponse => {
+            console.log('Registration process finished.');
+            console.log(resourceResponse);
+            return response;
+        }));
 }
 
 function checkIfTokenExpired(user) {
