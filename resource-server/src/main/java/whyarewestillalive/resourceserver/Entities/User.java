@@ -1,6 +1,9 @@
 package whyarewestillalive.resourceserver.Entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -10,13 +13,16 @@ public class User {
 	@Id
 	@GeneratedValue
 	protected Long id;
+	@Min(value=0,message="Balance cannot be negative")
 	protected int balance;
 	
+	@Column(unique=true)
+	@Size(min=5,max=20,message="Name length has to be between 5-20 characters")
 	protected String name;
+	@Email(message="Email has to be valid")
 	protected String email;
 	
 	protected Date lastlogin;
-	@OneToOne
 	protected Cart cart;
 	
 	public Long getId() {

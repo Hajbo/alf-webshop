@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 public class Cart {
+	
 	@Id
 	protected Long userid;
 	
@@ -38,6 +39,9 @@ public class Cart {
 	}
 	public void removeItem(Item removed) {
 		items.remove(removed);
+	}
+	public void clear() {
+		items.clear();
 	}
 	
 	@Override
