@@ -1,4 +1,4 @@
-package whyarewestillalive.resourceserver.controllers;
+package whyarewestillalive.resourceserver.Controllers;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;

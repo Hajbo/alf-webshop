@@ -9,3 +9,6 @@
 /local.properties
 target/
 node_modules/
+.classpath
+.project
+.settings/
