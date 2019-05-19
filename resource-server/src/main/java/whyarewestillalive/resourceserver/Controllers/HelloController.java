@@ -12,7 +12,7 @@ public class HelloController {
     @GetMapping("/hello")
     public String index(@AuthenticationPrincipal Jwt jwt) {
         System.out.println(jwt.toString());
-        return String.format("Hello, %s!", jwt.getSubject());
+        return String.format("Hello, %s! Your roles are: %s", jwt.getSubject(), jwt.getClaims().get("authorities"));
     }
 
     @GetMapping("/message")

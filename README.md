@@ -1,5 +1,7 @@
 # ALF assignment
 
+Info: You can find the logs in your /tmp/auth-server and /tmp/resource-server folders.
+
 ## Coding policies
 1. Everyone should work on his own branch
 2. Please commit regularly
