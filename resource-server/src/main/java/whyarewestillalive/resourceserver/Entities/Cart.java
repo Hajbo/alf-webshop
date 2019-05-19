@@ -5,13 +5,15 @@ import java.util.List;
 
 @Entity
 public class Cart {
-	@Id
-	protected Long userid;
 	
+	@Id
+	@Column
+	protected Long userid;
+
 	@OneToOne
 	protected User user;
 	
-	
+	@OneToMany(mappedBy = "id")
 	protected List<Item> items;
 	
 	public Long getUserId() {
@@ -38,6 +40,9 @@ public class Cart {
 	}
 	public void removeItem(Item removed) {
 		items.remove(removed);
+	}
+	public void clear() {
+		items.clear();
 	}
 	
 	@Override

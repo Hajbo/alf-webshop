@@ -10,7 +10,8 @@ public class Category {
 	protected Long id;
 	protected String name;
 	
-	@OneToMany(mappedBy= "category")
+	@OneToMany
+	@JoinColumn(name = "item_id")
 	protected List<Item> items;
 	
 	public Long getId() {
