@@ -1,6 +1,5 @@
 package whyarewestillalive.resourceserver.Controllers;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -63,10 +62,8 @@ public class ItemController {
 		User user=userRepository.findByName(jwt.getSubject());
 		if(user!=null) {
 			item.setUserId(user.getId());
-			Category category=categoryRepository.findByName(item.getCategory());
-			category.getItems().add(item);
 			itemRepository.save(item);
-			categoryRepository.save(category);
+
 			log.info("New Item created with ID:"+item.getId()+" and added to User:"+jwt.getSubject());
 			return ResponseEntity.ok().build();
 		}
