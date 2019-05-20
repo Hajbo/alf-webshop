@@ -13,7 +13,7 @@ public class Cart {
 	@OneToOne
 	protected User user;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "cart")
 	protected List<Item> items;
 	
 	public Long getUserId() {
