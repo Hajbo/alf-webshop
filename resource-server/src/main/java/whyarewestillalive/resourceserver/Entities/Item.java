@@ -18,6 +18,11 @@ public class Item {
 	
 	protected Date creationdate;
 	protected Date expirationdate;
+	
+	@ManyToOne
+        @JoinColumn(name = "userid",updatable = true, insertable = true)
+	private Cart cart;
+	
 
 	public Long getId() {
 		return id;
