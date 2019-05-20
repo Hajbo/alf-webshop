@@ -29,8 +29,7 @@ public class ItemController {
 	private ItemRepository itemRepository;
 	@Autowired 
 	private UserRepository userRepository;
-	@Autowired
-	private CategoryRepository categoryRepository;
+
 
 	
 	//Returns every item in database
@@ -42,9 +41,9 @@ public class ItemController {
 	
 	//Returns item with id of "id"
 	@GetMapping("{id}")
-	public ResponseEntity<Item> getByid(@PathVariable long id){
-		log.debug("Get/Return Item:"+id);
-		Item item=itemRepository.findById(id);
+	public ResponseEntity<Item> getByid(@PathVariable ID id){
+		log.debug("Get/Return Item:"+id.getId());
+		Item item=itemRepository.findById(id.getId());
 		if(item==null) {
 			log.warn("Item:"+id+" was not found");
 			return ResponseEntity.notFound().build();
@@ -96,9 +95,9 @@ public class ItemController {
 	
 	//Deletes item
 	@DeleteMapping
-	public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt,@RequestBody long id){
-		log.debug("Delete/Remove Item:"+id);
-		Item item=itemRepository.findById(id);
+	public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt,@RequestBody ID id){
+		log.debug("Delete/Remove Item:"+id.getId());
+		Item item=itemRepository.findById(id.getId());
 		User user=userRepository.findByName(jwt.getSubject());
 		if(user==null) {
 			log.warn("User:"+jwt.getSubject()+" is not the owner of Item:"+id+" ,or was not found");
