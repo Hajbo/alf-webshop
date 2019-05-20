@@ -20,7 +20,7 @@ public class Item {
 	protected Date expirationdate;
 	
 	@ManyToOne
-        @JoinColumn(name = "userid",updatable = true, insertable = true)
+        @JoinColumn(name = "userid",updatable = false, insertable = false)
 	private Cart cart;
 	
 
