@@ -32,8 +32,8 @@ public class AuthServerApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         User user = new User();
-        user.setName("demo");
-        user.setPassword(passwordEncoder.encode("demo"));
+        user.setName("tester");
+        user.setPassword(passwordEncoder.encode("tester"));
         user.setEnabled(true);
         user.setRoles(List.of("ROLE_USER"));
 
