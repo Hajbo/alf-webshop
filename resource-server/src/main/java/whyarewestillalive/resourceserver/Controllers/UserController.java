@@ -53,9 +53,9 @@ public class UserController {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<User> getByid(@PathVariable long id, @AuthenticationPrincipal Jwt jwt){
-		log.debug("Get/User with ID:"+id+" requested");
-		User user=userRepository.findById(id);
+	public ResponseEntity<User> getByid(@PathVariable ID id, @AuthenticationPrincipal Jwt jwt){
+		log.debug("Get/User with ID:"+id.getId()+" requested");
+		User user=userRepository.findById(id.getId());
 		if(user==null) {
 			log.warn("User:"+id+" was not found");
 			return ResponseEntity.notFound().build();
@@ -100,9 +100,9 @@ public class UserController {
 	
 	
 	@DeleteMapping
-	public ResponseEntity<?> delete(@RequestBody long id, @AuthenticationPrincipal Jwt jwt){
+	public ResponseEntity<?> delete(@RequestBody ID id, @AuthenticationPrincipal Jwt jwt){
 		log.debug("Delete/User:"+id+" requested for removal");
-		User user=userRepository.findById(id);
+		User user=userRepository.findById(id.getId());
 
 		if(user==null) {
 			log.warn("User:"+id+" was not found");

@@ -49,9 +49,9 @@ public class CartController {
 	
 	//Adds item to user's cart
 	@PostMapping
-	public ResponseEntity<?> getByid(@AuthenticationPrincipal Jwt jwt,@RequestBody long  id){
-		log.debug("Post/Add Item:"+id+" to User:"+jwt.getSubject()+"'s cart.");
-		Item item=itemRepository.findById(id);
+	public ResponseEntity<?> getByid(@AuthenticationPrincipal Jwt jwt,@RequestBody ID  id){
+		log.debug("Post/Add Item:"+id.getId()+" to User:"+jwt.getSubject()+"'s cart.");
+		Item item=itemRepository.findById(id.getId());
 		User user=userRepository.findByName(jwt.getSubject());
 		if(item!=null && user!=null) {
 			Cart cart=cartRepository.findByUserid(user.getId());
@@ -92,10 +92,10 @@ public class CartController {
 	
 	//Deletes an item in User's cart
 	@DeleteMapping
-	public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt,@RequestBody long id){
-		log.debug("Delete/Remove Item:"+id+" from User:"+jwt.getSubject()+"'s cart");
+	public ResponseEntity<?> delete(@AuthenticationPrincipal Jwt jwt,@RequestBody ID id){
+		log.debug("Delete/Remove Item:"+id.getId()+" from User:"+jwt.getSubject()+"'s cart");
 		User user=userRepository.findByName(jwt.getSubject());
-		Item item=itemRepository.findById(id);
+		Item item=itemRepository.findById(id.getId());
 		if(user!=null) {
 			Cart cart=cartRepository.findByUserid(user.getId());
 			cart.removeItem(item);
