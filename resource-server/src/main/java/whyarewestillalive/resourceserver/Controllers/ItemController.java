@@ -29,8 +29,6 @@ public class ItemController {
 	private ItemRepository itemRepository;
 	@Autowired 
 	private UserRepository userRepository;
-	@Autowired
-	private CategoryRepository categoryRepository;
 
 	
 	//Returns every item in database
