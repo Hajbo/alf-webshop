@@ -11,9 +11,7 @@ public class Item {
 	protected Long userid;
 	protected Long price;
 	
-	@ManyToOne
-	@JoinColumn(name="category_id")
-	protected Category category;
+	protected String category;
 	
 	protected String summary;
 	protected String description;
@@ -27,7 +25,7 @@ public class Item {
 	public Long getUserId() {
 		return userid;
 	}
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 	public String getSummary() {
@@ -52,7 +50,7 @@ public class Item {
 	public void setUserId(Long i) {
 		this.userid=i;
 	}
-	public void setCategory(Category cat) {
+	public void setCategory(String cat) {
 		this.category=cat;
 	}
 	public void setSummary(String sum) {

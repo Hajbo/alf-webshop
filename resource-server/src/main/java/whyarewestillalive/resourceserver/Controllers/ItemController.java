@@ -30,6 +30,8 @@ public class ItemController {
 	private ItemRepository itemRepository;
 	@Autowired 
 	private UserRepository userRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	
 	//Returns every item in database
@@ -61,12 +63,15 @@ public class ItemController {
 		User user=userRepository.findByName(jwt.getSubject());
 		if(user!=null) {
 			item.setUserId(user.getId());
+			Category category=categoryRepository.findByName(item.getCategory());
+			category.getItems().add(item);
 			itemRepository.save(item);
-			log.info("New Item created with ID:"+item.getId()+" and added to User:"+user.getName());
+			categoryRepository.save(category);
+			log.info("New Item created with ID:"+item.getId()+" and added to User:"+jwt.getSubject());
 			return ResponseEntity.ok().build();
 		}
 		else {
-			log.warn("User:"+user.getName()+" was not found");
+			log.warn("User:"+jwt.getSubject()+" was not found");
 			return ResponseEntity.notFound().build();
 		}
 	}
