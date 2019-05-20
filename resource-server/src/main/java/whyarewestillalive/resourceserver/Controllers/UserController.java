@@ -1,5 +1,6 @@
 package whyarewestillalive.resourceserver.Controllers;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,7 +33,8 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<List<User>> getAll( @AuthenticationPrincipal Jwt jwt){
 		log.debug("Get/Return users");
-		if (jwt.getClaims().get("authorities").toString().equals("ROLE_ADMIN")) {
+		List<String> roles = Arrays.asList(jwt.getClaims().get("authorities").toString());
+		if (roles.get(0).equals("[\"ROLE_ADMIN\"]")) {
 			log.info("Admin accessed:Return every user");
 			return ResponseEntity.ok(userRepository.findAll());
 		}
@@ -60,7 +62,8 @@ public class UserController {
 			log.warn("User:"+id+" was not found");
 			return ResponseEntity.notFound().build();
 		}
-		if (jwt.getClaims().get("authorities").toString().equals("ROLE_ADMIN") || user.getName()==jwt.getSubject()) {
+		List<String> roles = Arrays.asList(jwt.getClaims().get("authorities").toString());
+		if (roles.get(0).equals("[\"ROLE_ADMIN\"]") || user.getName().equals(jwt.getSubject())) {
 			log.info("Valid access,User:"+user.getName()+" returned");
 			return ResponseEntity.ok(user);
 
@@ -81,13 +84,14 @@ public class UserController {
 	@PutMapping
 	public ResponseEntity<?> update( @AuthenticationPrincipal Jwt jwt,@RequestBody User newuser){
 		log.debug("Put/Update user profile:"+newuser.getName());
+		List<String> roles = Arrays.asList(jwt.getClaims().get("authorities").toString());
 		Long Id=newuser.getId();
 		User user=userRepository.findById(Id).orElse(null);
 		if(user==null) {
 			log.warn("User:"+newuser.getName()+" was not found");
 			return ResponseEntity.notFound().build();
 		}
-		else if ((newuser.getName().equals(user.getName())) || (jwt.getClaims().get("authorities").toString().equals("ROLE_ADMIN"))) {
+		else if ((newuser.getName().equals(user.getName())) || (roles.get(0).equals("[\"ROLE_ADMIN\"]"))) {
 			userRepository.save(newuser);
 			log.info("User:"+user.getName()+" updated");
 			return ResponseEntity.ok().build();
@@ -102,13 +106,15 @@ public class UserController {
 	@DeleteMapping
 	public ResponseEntity<?> delete(@RequestBody ID id, @AuthenticationPrincipal Jwt jwt){
 		log.debug("Delete/User:"+id+" requested for removal");
+
+		List<String> roles = Arrays.asList(jwt.getClaims().get("authorities").toString());
 		User user=userRepository.findById(id.getId());
 
 		if(user==null) {
 			log.warn("User:"+id+" was not found");
 			return ResponseEntity.notFound().build();
 		}
-		else if((user.getName().equals(jwt.getSubject())) || (jwt.getClaims().get("authorities").toString().equals("ROLE_ADMIN"))) {
+		else if((user.getName().equals(jwt.getSubject())) || (roles.get(0).equals("[\"ROLE_ADMIN\"]"))) {
 			userRepository.delete(user);
 			log.info("User:"+id+" deleted");
 			return ResponseEntity.ok().build();
