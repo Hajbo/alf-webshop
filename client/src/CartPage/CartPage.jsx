@@ -21,14 +21,14 @@ class CartPage extends React.Component {
         newState.data = [
             {
                 id_: 1,
-                name: "alma",
+                category: "alma",
                 price: 100,
                 description:
                     "This is an apple"
             },
             {
                 id_: 2,
-                name: "banana",
+                category: "banana",
                 price: 200,
                 description: "This is a banana"
             }
@@ -60,8 +60,8 @@ class CartPage extends React.Component {
                                         filterable: false
                                     },
                                     {
-                                        Header: "Name",
-                                        accessor: "name",
+                                        Header: "Category",
+                                        accessor: "category",
                                         maxWidth: 100
                                     },
                                     {

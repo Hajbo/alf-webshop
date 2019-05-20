@@ -20,14 +20,14 @@ class ShopPage extends React.Component {
         newState.data = [
             {
                 id_: 1,
-                name: "alma",
+                category: "alma",
                 price: 100,
                 description:
                     "This is an appleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssad"
             },
             {
                 id_: 2,
-                name: "banana",
+                category: "banana",
                 price: 200,
                 description: "This is a banana"
             }
@@ -59,8 +59,8 @@ class ShopPage extends React.Component {
                                         filterable: false
                                     },
                                     {
-                                        Header: "Name",
-                                        accessor: "name",
+                                        Header: "Category",
+                                        accessor: "category",
                                         maxWidth: 100
                                     },
                                     {
