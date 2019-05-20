@@ -18,33 +18,33 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 class ApplicationConfig {
 
-  @Bean
-  public DataSource dataSource() {
+    @Bean
+    public DataSource dataSource() {
 
-    EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-    return builder.setType(EmbeddedDatabaseType.HSQL).build();
-  }
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        return builder.setType(EmbeddedDatabaseType.HSQL).build();
+    }
 
-  @Bean
-  public EntityManagerFactory entityManagerFactory() {
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
 
-    HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-    vendorAdapter.setGenerateDdl(true);
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
 
-    LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-    factory.setJpaVendorAdapter(vendorAdapter);
-    factory.setPackagesToScan("com.acme.domain");
-    factory.setDataSource(dataSource());
-    factory.afterPropertiesSet();
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("whyarewestillalive.resourceserver");
+        factory.setDataSource(dataSource());
+        factory.afterPropertiesSet();
 
-    return factory.getObject();
-  }
+        return factory.getObject();
+    }
 
-  @Bean
-  public PlatformTransactionManager transactionManager() {
+    @Bean
+    public PlatformTransactionManager transactionManager() {
 
-    JpaTransactionManager txManager = new JpaTransactionManager();
-    txManager.setEntityManagerFactory(entityManagerFactory());
-    return txManager;
-  }
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory());
+        return txManager;
+    }
 }
