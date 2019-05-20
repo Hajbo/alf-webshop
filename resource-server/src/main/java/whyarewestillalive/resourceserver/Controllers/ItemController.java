@@ -29,6 +29,8 @@ public class ItemController {
 	private ItemRepository itemRepository;
 	@Autowired 
 	private UserRepository userRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	
 	//Returns every item in database
@@ -61,6 +63,7 @@ public class ItemController {
 		if(user!=null) {
 			item.setUserId(user.getId());
 			itemRepository.save(item);
+
 			log.info("New Item created with ID:"+item.getId()+" and added to User:"+jwt.getSubject());
 			return ResponseEntity.ok().build();
 		}

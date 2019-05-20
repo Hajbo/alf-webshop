@@ -10,7 +10,7 @@ public class Item {
 	protected Long id;
 	protected Long userid;
 	protected Long price;
-	
+
 	protected String category;
 	
 	protected String summary;
