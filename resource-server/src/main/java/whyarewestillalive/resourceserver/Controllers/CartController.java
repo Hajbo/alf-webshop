@@ -56,6 +56,7 @@ public class CartController {
 		if(item!=null && user!=null) {
 			Cart cart=cartRepository.findByUserid(user.getId());
 			cart.addItem(item);
+			cartRepository.save(cart);
 			log.info("Item:"+id+" succeessfully added to User:"+jwt.getSubject()+"'s cart");
 			return ResponseEntity.ok().build();
 		}
@@ -99,6 +100,7 @@ public class CartController {
 		if(user!=null) {
 			Cart cart=cartRepository.findByUserid(user.getId());
 			cart.removeItem(item);
+			cartRepository.save(cart);
 			log.info("Item:"+id+" successfully removed from User:"+jwt.getSubject()+"'s cart");
 			return ResponseEntity.ok().build();
 		}
