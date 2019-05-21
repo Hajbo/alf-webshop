@@ -81,6 +81,7 @@ public class UserController {
 		log.debug("Post/Create new User:"+user.getName());
 		Cart cart=new Cart();
 		cart.setUser(user);
+		user.setCart(cart);
 		cartRepository.save(cart);
 		userRepository.save(user);
 		return ResponseEntity.ok().build();
