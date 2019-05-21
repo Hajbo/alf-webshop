@@ -2,7 +2,7 @@ package whyarewestillalive.resourceserver.Entities;
 
 import javax.persistence.*;
 import java.util.List;
-
+import java.util.ArrayList;
 @Entity
 public class Cart {
 	
@@ -14,7 +14,7 @@ public class Cart {
 	protected User user;
 	
 	@OneToMany(mappedBy = "cart")
-	protected List<Item> items;
+	protected List<Item> items=new ArrayList<Item>();
 	
 	public Long getUserId() {
 		return userid;
