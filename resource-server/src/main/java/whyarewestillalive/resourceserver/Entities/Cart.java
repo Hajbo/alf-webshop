@@ -1,12 +1,15 @@
 package whyarewestillalive.resourceserver.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
+
 @Entity
+@JsonIgnoreProperties(value={"user"})
 public class Cart {
 	
 	@Id
