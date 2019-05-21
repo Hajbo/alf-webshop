@@ -2,7 +2,7 @@ import React from "react";
 import ReactTable from "react-table";
 
 import { authenticationService } from "../_services";
-import { checkout, removeItemFromCart, getCart} from "../_helpers";
+import { checkout, removeItemFromCart, getCart } from "../_helpers";
 
 
 import "react-table/react-table.css";

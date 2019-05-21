@@ -21,4 +21,20 @@ function resourceApiRegister(username, email, access_token) {
         });
 };
 
-export { resourceApiRegister };
+function getUser(user) {
+    var username = user.username;
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${user.tokendata.access_token}`
+        }
+    };
+    return fetch(resourceApiUsers, requestOptions)
+        .then(handleResponse)
+        .then(response => {
+            console.log(`Resource API GET for ${username} resulted in: ${response}`);
+            return response;
+        });
+}
+
+export { resourceApiRegister, getUser };

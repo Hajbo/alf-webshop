@@ -1,6 +1,7 @@
 import React from "react";
 
 import { authenticationService } from "../_services";
+import { getUser } from "../_helpers";
 
 class ProfilePage extends React.Component {
     constructor(props) {
@@ -8,45 +9,39 @@ class ProfilePage extends React.Component {
 
         this.state = {
             currentUser: authenticationService.currentUserValue,
-            items: null
+            data: null
         };
     }
 
     componentDidMount() {
         let newState = Object.assign({}, this.state);
-        newState.items = [
-            {
-                id_: 1,
-                name: "alma",
-                price: 100,
-                description: "This is an apple"
-            },
-            {
-                id_: 2,
-                name: "banana",
-                price: 200,
-                description: "This is a banana"
+        getUser(this.state.currentUser).then(
+            data => {
+                if(this.state.currentUser.role === "ROLE_ADMIN") {
+                    for (let user of data) {
+                        if(user.name === this.state.currentUser.username){
+                            newState.data = user;
+                            break;
+                        }
+                    }
+                } else {
+                    newState.data = data;
+                }
+                this.setState(newState);
             }
-        ];
-        this.setState(newState);
-        //userService.getAll().then(users => this.setState({ users }));
+        );  
     }
 
     render() {
-        const { currentUser, items } = this.state;
+        const { currentUser, data } = this.state;
         return (
             <div>
                 <h1>Hi {currentUser.username}!</h1>
                 <br />
-                <h3>Items for sale:</h3>
-                {items && (
+                <h3>Info:</h3>
+                {data && (
                     <ul>
-                        {items.map(item => (
-                            <li key={item.id_}>
-                                {item.name} costs {item.price}.{" "}
-                                {item.description}
-                            </li>
-                        ))}
+                        <li>Your role: {currentUser.role}</li>
                     </ul>
                 )}
             </div>
