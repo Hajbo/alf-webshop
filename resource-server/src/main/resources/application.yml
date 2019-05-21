@@ -5,8 +5,14 @@ spring:
     name: ResourceServer
   jpa:
     show-sql: true
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   security:
     oauth2:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8081/.well-known/jwks.json
+logging:
+  path: /tmp/resource-logs

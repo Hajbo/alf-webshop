@@ -42,6 +42,7 @@ class ProfilePage extends React.Component {
                 {data && (
                     <ul>
                         <li>Your role: {currentUser.role}</li>
+                        <li>Balance: {data.balance}</li>
                     </ul>
                 )}
             </div>

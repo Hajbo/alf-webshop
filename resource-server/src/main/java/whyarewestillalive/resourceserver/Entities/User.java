@@ -18,7 +18,7 @@ public class User {
 
 	@Column
 	@Min(value=0,message="Balance cannot be negative")
-	protected int balance;
+	protected int balance = 10000000;
 
 	@Column(unique=true)
 	@Size(min=3,max=20,message="Name length has to be between 5-20 characters")

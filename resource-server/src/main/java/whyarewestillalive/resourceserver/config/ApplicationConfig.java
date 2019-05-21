@@ -47,4 +47,5 @@ class ApplicationConfig {
         txManager.setEntityManagerFactory(entityManagerFactory());
         return txManager;
     }
+
 }

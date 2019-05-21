@@ -10,8 +10,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import whyarewestillalive.resourceserver.Entities.Cart;
+import whyarewestillalive.resourceserver.Entities.Item;
 import whyarewestillalive.resourceserver.Entities.User;
 import whyarewestillalive.resourceserver.Repositories.CartRepository;
+import whyarewestillalive.resourceserver.Repositories.ItemRepository;
 import whyarewestillalive.resourceserver.Repositories.UserRepository;
 
 import java.util.List;
@@ -29,6 +31,10 @@ public class ResourceServerApplication implements CommandLineRunner {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
 
     public static void main(String[] args) {
         SpringApplication.run(ResourceServerApplication.class, args);
@@ -51,6 +57,17 @@ public class ResourceServerApplication implements CommandLineRunner {
         userCart.setUser(user);
 
         cartRepository.saveAll(List.of(userCart, adminCart));
+
+        Item test1 = new Item();
+        test1.setPrice(Long.parseLong("123"));
+        test1.setCategory("cica");
+        test1.setDescription("testitem");
+        test1.setUserId(user.getId());
+        itemRepository.save(test1);
+
+        adminCart.addItem(test1);
+        cartRepository.save(adminCart);
+
 
         log.info("Resource server started.");
     }

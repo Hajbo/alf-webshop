@@ -1,5 +1,8 @@
 package whyarewestillalive.resourceserver.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ public class Cart {
 	@OneToOne
 	protected User user;
 	
-	@OneToMany(mappedBy = "cart")
+	@ManyToMany
 	protected List<Item> items=new ArrayList<Item>();
 	
 	public Long getUserId() {
@@ -38,6 +41,7 @@ public class Cart {
 	}
 	public void addItem(Item added) {
 		items.add(added);
+		added.getCarts().add(this);
 	}
 	public void removeItem(Item removed) {
 		items.remove(removed);

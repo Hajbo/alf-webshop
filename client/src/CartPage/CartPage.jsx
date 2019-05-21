@@ -20,8 +20,8 @@ class CartPage extends React.Component {
     componentDidMount() {
         let newState = Object.assign({}, this.state);
         getCart(this.state.currentUser).then(
-            data => {
-                newState.data = data;
+            response => {
+                newState.data = response;
                 this.setState(newState);
             }
         );   
@@ -72,7 +72,9 @@ class CartPage extends React.Component {
                                         Cell: ({ row }) => (
                                             <button
                                                 onClick={() =>
-                                                    removeItemFromCart(row.id, currentUser)
+                                                    removeItemFromCart(row.id, currentUser).then(
+                                                        window.location.reload()
+                                                    )
                                                 }
                                             >
                                                 Remove from cart
@@ -88,7 +90,9 @@ class CartPage extends React.Component {
                 )}
                 <button
                 onClick={() =>
-                    checkout(currentUser)
+                    checkout(currentUser).then(
+                        window.location.reload()
+                    )
                 }
                 >
                     Checkout

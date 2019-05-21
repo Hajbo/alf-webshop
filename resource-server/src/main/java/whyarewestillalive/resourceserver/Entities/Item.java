@@ -1,9 +1,16 @@
 package whyarewestillalive.resourceserver.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties(value={"carts"})
 public class Item {
 	@Id
 	@GeneratedValue
@@ -18,9 +25,9 @@ public class Item {
 	
 	protected Date creationdate;
 	protected Date expirationdate;
-	
-	@ManyToOne
-	private Cart cart;
+
+	@ManyToMany
+	protected List<Cart> carts=new ArrayList<Cart>();
 	
 
 	public Long getId() {
@@ -69,6 +76,15 @@ public class Item {
 	public void setExpirationDate(Date ed) {
 		this.expirationdate=ed;
 	}
+	public void setDescription(String desc)  { this.description = desc;}
+
+	public List<Cart> getCarts(){
+		return carts;
+	}
+	public void addCart(Cart added) {
+		carts.add(added);
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,6 +94,7 @@ public class Item {
 
         return id != null ? id.equals(i.getId()) : i.getId() == null;
     }
+
 	@Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;

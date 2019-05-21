@@ -34,13 +34,15 @@ public class CartController {
 	
 	//Returns user's cart
 	@GetMapping
-	public ResponseEntity<List<Item>> getByid(@AuthenticationPrincipal Jwt jwt){
+	public ResponseEntity<List<Item>> getCart(@AuthenticationPrincipal Jwt jwt){
 		log.debug("Get/Return User:"+jwt.getSubject()+"'s cart.");
 		User user=userRepository.findByName(jwt.getSubject());
 		if(user!=null) {
 			Cart cart=cartRepository.findByUserid(user.getId());
+			log.warn(cart.getItems().toString());
 			log.info("User:"+jwt.getSubject()+"'s cart was found.");
-			return ResponseEntity.ok(cart.getItems());
+			List<Item> items = cart.getItems();
+			return ResponseEntity.ok(items);
 		}
 		else {
 			log.warn("User:"+jwt.getSubject()+"'s cart was not found!");
@@ -50,7 +52,7 @@ public class CartController {
 	
 	//Adds item to user's cart
 	@PostMapping
-	public ResponseEntity<?> getByid(@AuthenticationPrincipal Jwt jwt,@RequestBody ID  id){
+	public ResponseEntity<?> addToCart(@AuthenticationPrincipal Jwt jwt,@RequestBody ID  id){
 		log.debug("Post/Add Item:"+id.getId()+" to User:"+jwt.getSubject()+"'s cart.");
 		Item item=itemRepository.findById(id.getId());
 		User user=userRepository.findByName(jwt.getSubject());
@@ -58,6 +60,7 @@ public class CartController {
 			Cart cart=cartRepository.findByUserid(user.getId());
 			cart.addItem(item);
 			cartRepository.save(cart);
+
 			log.info("Item:"+id+" succeessfully added to User:"+jwt.getSubject()+"'s cart");
 			return ResponseEntity.ok().build();
 		}
