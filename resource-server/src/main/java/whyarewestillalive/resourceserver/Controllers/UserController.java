@@ -116,12 +116,14 @@ public class UserController {
 
 		List<String> roles = Arrays.asList(jwt.getClaims().get("authorities").toString());
 		User user=userRepository.findById(id.getId());
+		Cart cart =cartRepository.findByUserid(user.getId());
 
 		if(user==null) {
 			log.warn("User:"+id+" was not found");
 			return ResponseEntity.notFound().build();
 		}
 		else if((user.getName().equals(jwt.getSubject())) || (roles.get(0).equals("[\"ROLE_ADMIN\"]"))) {
+			cartRepository.delete(cart);
 			userRepository.delete(user);
 			log.info("User:"+id+" deleted");
 			return ResponseEntity.ok().build();

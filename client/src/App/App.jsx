@@ -3,7 +3,7 @@ import { Router, Route, Link } from "react-router-dom";
 
 import { history } from "../_helpers/history";
 import { authenticationService } from "../_services/authentication.service";
-import { PrivateRoute } from "../_components";
+import { PrivateRoute, AdminRoute } from "../_components";
 import { HomePage } from "../HomePage";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
@@ -11,6 +11,7 @@ import { ProfilePage } from "../ProfilePage";
 import { ShopPage } from "../ShopPage";
 import { CartPage } from "../CartPage";
 import { AddItemPage } from "../AddItemPage";
+import { AdminUsersPage } from "../AdminPages";
 
 import "./app.css";
 
@@ -90,6 +91,14 @@ class App extends React.Component {
                                 </Link>
                             )}
                             {currentUser && (
+                                <Link
+                                    to="/users"
+                                    className="nav-item nav-link"
+                                >
+                                    Users
+                                </Link>
+                            )}
+                            {currentUser && (
                                 <a
                                     onClick={this.logout}
                                     className="nav-item nav-link"
@@ -128,6 +137,11 @@ class App extends React.Component {
                                         exact
                                         path="/cart"
                                         component={CartPage}
+                                    />
+                                    <AdminRoute
+                                        exact
+                                        path="/users"
+                                        component={AdminUsersPage}
                                     />
                                     <Route
                                         path="/login"

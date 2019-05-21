@@ -21,6 +21,25 @@ function resourceApiRegister(username, email, access_token) {
         });
 };
 
+function deleteUser(id, currentUser) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentUser.tokendata.access_token}`
+        },
+        body: JSON.stringify({
+            'id': id
+        })
+    };
+    return fetch(resourceApiUsers, requestOptions)
+        .then(handleResponse)
+        .then(response => {
+            console.log(`DELETE API register for ID ${id} resulted in: ${response}`);
+            return response;
+        });
+};
+
 function getUser(user) {
     var username = user.username;
     const requestOptions = {
@@ -37,4 +56,4 @@ function getUser(user) {
         });
 }
 
-export { resourceApiRegister, getUser };
+export { resourceApiRegister, getUser, deleteUser };
