@@ -25,7 +25,7 @@ class ProfilePage extends React.Component {
                         }
                     }
                 } else {
-                    newState.data = data;
+                    newState.data = data[0];
                 }
                 this.setState(newState);
             }

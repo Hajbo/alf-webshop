@@ -90,7 +90,7 @@ class App extends React.Component {
                                     Post item
                                 </Link>
                             )}
-                            {currentUser && (
+                            {currentUser && currentUser.role === 'ROLE_ADMIN' && (
                                 <Link
                                     to="/users"
                                     className="nav-item nav-link"
