@@ -29,6 +29,8 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private CartRepository cartRepository;
 	
 	@GetMapping
 	public ResponseEntity<List<User>> getAll( @AuthenticationPrincipal Jwt jwt){
@@ -77,6 +79,9 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<?> create( @AuthenticationPrincipal Jwt jwt,@RequestBody User user) {
 		log.debug("Post/Create new User:"+user.getName());
+		Cart cart=new Cart();
+		cart.setUser(user);
+		cartRepository.save(cart);
 		userRepository.save(user);
 		return ResponseEntity.ok().build();
 	}
