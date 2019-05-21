@@ -24,6 +24,7 @@ public class Cart {
 	}
 	public void setUser(User u) {
 		this.user=u;
+		this.userid=u.getId();
 	}
 	public int getPrice() {
 		int sum=0;
