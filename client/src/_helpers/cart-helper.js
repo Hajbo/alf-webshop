@@ -17,7 +17,7 @@ function addToCart(itemId, user) {
     return fetch(resourceApiCart, requestOptions)
         .then(handleResponse)
         .then(response => {
-            console.log(`Add to cart itemid ${itemId} for ${username} resulted in: ${response.status}`);
+            console.log(`Add to cart itemid ${itemId} for ${username} resulted in: ${response}`);
             return response;
         });
 };
@@ -37,7 +37,7 @@ function removeItemFromCart(itemId, user) {
     return fetch(resourceApiCart, requestOptions)
         .then(handleResponse)
         .then(response => {
-            console.log(`Delete itemid ${itemId} from cart for ${username} resulted in: ${response.status}`);
+            console.log(`Delete itemid ${itemId} from cart for ${username} resulted in: ${response}`);
             return response;
         });
 };
@@ -55,7 +55,7 @@ function checkout(user) {
     return fetch(resourceApiCart, requestOptions)
         .then(handleResponse)
         .then(response => {
-            console.log(`Checkout cart for ${username} resulted in: ${response.status}`);
+            console.log(`Checkout cart for ${username} resulted in: ${response}`);
             return response;
         });
 };
@@ -71,7 +71,7 @@ function getCart(user) {
     return fetch(resourceApiCart, requestOptions)
         .then(handleResponse)
         .then(response => {
-            console.log(`Get cart for ${username} resulted in: ${response.status}`);
+            console.log(`Get cart for ${username} resulted in: ${response}`);
             return response;
         });
 };

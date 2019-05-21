@@ -2,7 +2,8 @@ import React from "react";
 import ReactTable from "react-table";
 
 import { authenticationService } from "../_services";
-import { checkout, removeItemFromCart } from "../_helpers";
+import { checkout, removeItemFromCart, getCart} from "../_helpers";
+
 
 import "react-table/react-table.css";
 
@@ -18,23 +19,12 @@ class CartPage extends React.Component {
 
     componentDidMount() {
         let newState = Object.assign({}, this.state);
-        newState.data = [
-            {
-                id_: 1,
-                category: "alma",
-                price: 100,
-                description:
-                    "This is an apple"
-            },
-            {
-                id_: 2,
-                category: "banana",
-                price: 200,
-                description: "This is a banana"
+        getCart(this.state.currentUser).then(
+            data => {
+                newState.data = data;
+                this.setState(newState);
             }
-        ];
-        this.setState(newState);
-        //userService.getAll().then(users => this.setState({ users }));
+        );   
     }
 
     render() {
@@ -42,6 +32,7 @@ class CartPage extends React.Component {
         console.log(data);
         return (
             <div>
+                {!data && <p>It seems like your cart is empty! :O</p>}
                 {data && (
                     <ReactTable
                         data={data}
@@ -55,7 +46,7 @@ class CartPage extends React.Component {
                                 columns: [
                                     {
                                         Header: "#",
-                                        accessor: "id_",
+                                        accessor: "id",
                                         width: 50,
                                         filterable: false
                                     },
@@ -82,7 +73,7 @@ class CartPage extends React.Component {
                                         Cell: ({ row }) => (
                                             <button
                                                 onClick={() =>
-                                                    removeItemFromCart(row.id_, currentUser)
+                                                    removeItemFromCart(row.id, currentUser)
                                                 }
                                             >
                                                 Remove from cart

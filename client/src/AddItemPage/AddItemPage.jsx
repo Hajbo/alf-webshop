@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, Reset } from "formik";
 import * as Yup from "yup";
 
 import { authenticationService } from "../_services";
@@ -32,15 +32,14 @@ class AddItemPage extends React.Component {
                     })}
                     onSubmit={(
                         { price, category, description },
-                        { setStatus, setSubmitting }
+                        { setStatus, setSubmitting, resetForm }
                     ) => {
                         setStatus();
                         addItem(price, category, description, currentUser).then(
                             resp => {
-                                const { from } = this.props.location.state || {
-                                    from: { pathname: "/additem" }
-                                };
-                                this.props.history.push(from);
+                                this.props.history.push('/additem');
+                                setSubmitting(false);
+                                resetForm();
                             },
                             error => {
                                 setSubmitting(false);

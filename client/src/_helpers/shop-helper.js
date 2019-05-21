@@ -23,11 +23,11 @@ function addItem(price, category, description, user) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${user.tokendata.access_token}`
         },
-        body: {
-            'price': price,
-            'category': category,
-            'description': description
-        }
+        body: JSON.stringify({
+            "price": price,
+            "category": category,
+            "description": description
+        })
     };
     return fetch(resourceApiItems, requestOptions)
         .then(handleResponse)

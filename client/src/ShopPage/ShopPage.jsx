@@ -2,7 +2,8 @@ import React from "react";
 import ReactTable from "react-table";
 
 import { authenticationService } from "../_services";
-import { addToCart } from "../_helpers";
+import { addToCart, getItems } from "../_helpers";
+
 import "react-table/react-table.css";
 
 class ShopPage extends React.Component {
@@ -17,23 +18,12 @@ class ShopPage extends React.Component {
 
     componentDidMount() {
         let newState = Object.assign({}, this.state);
-        newState.data = [
-            {
-                id_: 1,
-                category: "alma",
-                price: 100,
-                description:
-                    "This is an appleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssadappleasddasdssad"
-            },
-            {
-                id_: 2,
-                category: "banana",
-                price: 200,
-                description: "This is a banana"
+        getItems(this.state.currentUser).then(
+            data => {
+                newState.data = data;
+                this.setState(newState);
             }
-        ];
-        this.setState(newState);
-        //userService.getAll().then(users => this.setState({ users }));
+        );   
     }
 
     render() {
@@ -41,6 +31,7 @@ class ShopPage extends React.Component {
         console.log(data);
         return (
             <div>
+                {!data && <p>The shop is empty :(</p>}
                 {data && (
                     <ReactTable
                         data={data}
@@ -54,7 +45,7 @@ class ShopPage extends React.Component {
                                 columns: [
                                     {
                                         Header: "#",
-                                        accessor: "id_",
+                                        accessor: "id",
                                         width: 50,
                                         filterable: false
                                     },
@@ -81,7 +72,7 @@ class ShopPage extends React.Component {
                                         Cell: ({ row }) => (
                                             <button
                                                 onClick={() =>
-                                                    addToCart(row.id_, currentUser)
+                                                    addToCart(row.id, currentUser)
                                                 }
                                             >
                                                 Add to cart
