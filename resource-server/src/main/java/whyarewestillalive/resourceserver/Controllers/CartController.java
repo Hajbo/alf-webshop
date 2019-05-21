@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import whyarewestillalive.resourceserver.Entities.*;
 import whyarewestillalive.resourceserver.Repositories.*;
 
+import java.util.List;
 
 
 @RestController
@@ -33,13 +34,13 @@ public class CartController {
 	
 	//Returns user's cart
 	@GetMapping
-	public ResponseEntity<Cart> getByid(@AuthenticationPrincipal Jwt jwt){
+	public ResponseEntity<List<Item>> getByid(@AuthenticationPrincipal Jwt jwt){
 		log.debug("Get/Return User:"+jwt.getSubject()+"'s cart.");
 		User user=userRepository.findByName(jwt.getSubject());
 		if(user!=null) {
 			Cart cart=cartRepository.findByUserid(user.getId());
 			log.info("User:"+jwt.getSubject()+"'s cart was found.");
-			return ResponseEntity.ok(cart);
+			return ResponseEntity.ok(cart.getItems());
 		}
 		else {
 			log.warn("User:"+jwt.getSubject()+"'s cart was not found!");
@@ -76,7 +77,6 @@ public class CartController {
 			log.info("User:"+jwt.getSubject()+"'s cart was found");
 			if(user.Pay(cart.getPrice())) {
 				cart.clear();
-				cartRepository.save(cart);
 				cartRepository.save(cart);
 				log.info("Items successfully bought, User:"+jwt.getSubject()+"'s cart emptied");
 				return ResponseEntity.ok().build();

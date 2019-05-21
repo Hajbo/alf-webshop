@@ -61,17 +61,16 @@ function checkout(user) {
 };
 
 function getCart(user) {
-    var username = user.username;
     const requestOptions = {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${user.tokendata.access_token}`
-        }
+        },
     };
     return fetch(resourceApiCart, requestOptions)
         .then(handleResponse)
         .then(response => {
-            console.log(`Get cart for ${username} resulted in: ${response}`);
+            console.log(`GET cart items resulted in: ${response}`);
             return response;
         });
 };

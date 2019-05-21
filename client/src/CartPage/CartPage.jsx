@@ -18,11 +18,10 @@ class CartPage extends React.Component {
     }
 
     componentDidMount() {
+        let newState = Object.assign({}, this.state);
         getCart(this.state.currentUser).then(
             data => {
-                let newState = Object.assign({}, this.state);
                 newState.data = data;
-                console.log(data);
                 this.setState(newState);
             }
         );   
