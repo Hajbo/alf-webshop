@@ -18,10 +18,11 @@ class CartPage extends React.Component {
     }
 
     componentDidMount() {
-        let newState = Object.assign({}, this.state);
         getCart(this.state.currentUser).then(
             data => {
+                let newState = Object.assign({}, this.state);
                 newState.data = data;
+                console.log(data);
                 this.setState(newState);
             }
         );   
@@ -29,7 +30,6 @@ class CartPage extends React.Component {
 
     render() {
         const { data, currentUser } = this.state;
-        console.log(data);
         return (
             <div>
                 {!data && <p>It seems like your cart is empty! :O</p>}

@@ -21,7 +21,7 @@ public class User {
 	protected int balance;
 
 	@Column(unique=true)
-	@Size(min=5,max=20,message="Name length has to be between 5-20 characters")
+	@Size(min=3,max=20,message="Name length has to be between 5-20 characters")
 	protected String name;
 
 	@Column

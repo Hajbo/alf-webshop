@@ -6,11 +6,13 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
 
     @Id
+    @Size(min=3,max=20,message="Name length has to be between 5-20 characters")
     private String name;
     private String password;
     private boolean enabled;

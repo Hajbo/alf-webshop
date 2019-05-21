@@ -79,9 +79,11 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<?> create( @AuthenticationPrincipal Jwt jwt,@RequestBody User user) {
 		log.debug("Post/Create new User:"+user.getName());
+		userRepository.save(user);
 		Cart cart=new Cart();
 		cart.setUser(user);
 		cartRepository.save(cart);
+		user.setCart(cart);
 		userRepository.save(user);
 		return ResponseEntity.ok().build();
 	}
